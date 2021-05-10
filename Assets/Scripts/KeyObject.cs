@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class KeyObject : MonoBehaviour
 {
-    //[SerializeField] private Outline _outline;
-    //[SerializeField] private Animator _animator;
-    //[SerializeField] private string _selectAnimationTrigger;
+    [SerializeField] private KeyObjectMover _mover;
 
-    //public void Select()
-    //{
-    //    _outline.enabled = false;
-    //    _animator.SetTrigger(_selectAnimationTrigger);
-    //}
+    private void OnEnable()
+    {
+        _mover.TargetReached += OnTargetReached;
+    }
+
+    private void OnDisable()
+    {
+        _mover.TargetReached -= OnTargetReached;
+    }
+
+    private void OnTargetReached()
+    {
+        Debug.Log("Target is reached");
+    }
 }
