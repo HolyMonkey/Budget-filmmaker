@@ -5,73 +5,83 @@ using UnityEngine.UI;
 
 public class CameraMover : MonoBehaviour
 {
-    //[SerializeField] private float _sensitivity;
-    [SerializeField] private Button _rotateLeftButton;
-    [SerializeField] private Button _rotateRightButton;
-    [SerializeField] private float _rotationPerClick;
-    [SerializeField] private float _rotateDuration;
-    [SerializeField] private Transform _pointToFollow;
+    [SerializeField] private float _speed;
+    [SerializeField] private Transform _cameraRig;
+    [SerializeField] private Vector2 _limitX;
+    [SerializeField] private Vector2 _limitZ;
 
-    private bool _isRotating;
-    //private Vector3 _mousePreviousPosition;
+    private Vector3 _mousePreviousPosition;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            _mousePreviousPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 movementDirection = -(Camera.main.ScreenToViewportPoint(Input.mousePosition) - _mousePreviousPosition).normalized;
+            Vector3 newPosition = _cameraRig.position;
+            newPosition += movementDirection * _speed * Time.deltaTime;
+            //newPosition.x = Mathf.Clamp(newPosition.x, _limitX.x, _limitX.y);
+            //newPosition.z = Mathf.Clamp(newPosition.z, -_limitZ.x, _limitZ.y);
+            _cameraRig.position = newPosition;
+            _mousePreviousPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        }
+    }
+
+
+
+    //private const string _mouseXAxis = "Mouse X";
+    //private const string _mouseYAxis = "Mouse Y";
 
     //private void Update()
     //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        _mousePreviousPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-    //    }
-
     //    if (Input.GetMouseButton(0))
     //    {
-    //        Vector3 passedDistance = Camera.main.ScreenToViewportPoint(Input.mousePosition) - _mousePreviousPosition;
-    //        Camera.main.transform.RotateAround(Vector3.zero, new Vector3(0, 1, 0), -passedDistance.x * 180 * Time.deltaTime * _sensitivity);
-    //        _mousePreviousPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+    //        Vector3 position = _cameraRig.position;
+    //        position.x -= Input.GetAxis(_mouseXAxis) * _speed * Time.deltaTime;
+    //        position.z -= Input.GetAxis(_mouseYAxis) * _speed * Time.deltaTime;
+
+    //        position.x = Mathf.Clamp(position.x, _limitX.x, _limitX.y);
+    //        position.z = Mathf.Clamp(position.z, -_limitZ.x, _limitZ.y);
+    //        _cameraRig.position = position;
     //    }
     //}
 
-    private void OnEnable()
-    {
-        _rotateRightButton.onClick.AddListener(OnRotateRightButtonClicked);
-        _rotateLeftButton.onClick.AddListener(OnRotateLeftButtonClicked);
-    }
 
-    private void OnDisable()
-    {
-        _rotateRightButton.onClick.RemoveListener(OnRotateRightButtonClicked);
-        _rotateLeftButton.onClick.RemoveListener(OnRotateLeftButtonClicked);
-    }
-    private void OnRotateLeftButtonClicked()
-    {
-        StartCoroutine(RotateAround(_rotationPerClick, _rotateDuration));
-    }
 
-    private void OnRotateRightButtonClicked()
-    {
-        StartCoroutine(RotateAround(-_rotationPerClick, _rotateDuration));
-    }
+    //private Vector3 _difference;
+    //private Vector3 _origin;
+    //private bool _isDragging;
 
-    private IEnumerator RotateAround(float angle, float duration)
-    {
-        if (_isRotating == false)
-        {
-            _isRotating = true;
-            float passedTime = 0;
-            _pointToFollow.RotateAround(Vector3.zero, new Vector3(0, 1, 0), angle);
-            Quaternion startRotation = Camera.main.transform.rotation;
-            Vector3 startPosition = Camera.main.transform.position;
+    //private void LateUpdate()
+    //{
+    //    Vector3 position = _cameraRig.position;
 
-            while (passedTime < duration)
-            {
-                Camera.main.transform.position = Vector3.Lerp(startPosition, _pointToFollow.position, passedTime / duration);
-                Camera.main.transform.rotation = Quaternion.Lerp(startRotation, _pointToFollow.rotation, passedTime / duration);
-                passedTime += Time.deltaTime;
-                yield return null;
-            }
+    //    if (Input.GetMouseButton(0))
+    //    {
+    //        _difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - _cameraRig.transform.position;
+    //        if (_isDragging == false)
+    //        {
+    //            _isDragging = true;
+    //            _origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        _isDragging = false;
+    //    }
 
-            Camera.main.transform.position = _pointToFollow.position;
-            Camera.main.transform.rotation = _pointToFollow.rotation;
-            _isRotating = false;
-        }
-    }
+    //    if (_isDragging)
+    //    {
+    //        position = _origin - _difference;
+    //    }
+
+    //    position.y = _cameraRig.position.y;
+    //    position.x = Mathf.Clamp(position.x, _limitX.x, _limitX.y);
+    //    position.z = Mathf.Clamp(position.z, -_limitZ.x, _limitZ.y);
+    //    _cameraRig.position = position;
+    //}
 }
