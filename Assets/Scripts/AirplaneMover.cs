@@ -14,6 +14,7 @@ public class AirplaneMover : KeyObjectMover
                 if (hitInfo.transform.TryGetComponent(out Airplane airplane))
                 {
                     IsDragging = true;
+                    StartDragging();
                 }
             }
         }
@@ -22,6 +23,7 @@ public class AirplaneMover : KeyObjectMover
         {
             IsDragging = false;
             IsCloseToTarget();
+            EndDragging();
         }
 
         if (Input.GetMouseButton(0) && IsDragging)

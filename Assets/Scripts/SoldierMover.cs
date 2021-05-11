@@ -16,6 +16,7 @@ public class SoldierMover : KeyObjectMover
                 if (hitInfo.transform.TryGetComponent(out Soldier soldier))
                 {
                     IsDragging = true;
+                    StartDragging();
                 }
             }
         }
@@ -24,6 +25,7 @@ public class SoldierMover : KeyObjectMover
         {
             IsDragging = false;
             IsCloseToTarget();
+            EndDragging();
         }
 
         if (Input.GetMouseButton(0) && IsDragging)

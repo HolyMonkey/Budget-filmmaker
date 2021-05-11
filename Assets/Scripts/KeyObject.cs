@@ -5,7 +5,6 @@ using UnityEngine;
 public class KeyObject : MonoBehaviour
 {
     [SerializeField] private KeyObjectGhost _objectGhost;
-    //[SerializeField] private float _ghostDisappearDelay;
     [SerializeField] private KeyObjectMover _mover;
 
     private void OnEnable()
@@ -32,7 +31,5 @@ public class KeyObject : MonoBehaviour
         }
 
         _objectGhost.Disappear();
-        //yield return new WaitForSeconds(_ghostDisappearDelay);
-        //_objectGhost.Destroy();
     }
 }

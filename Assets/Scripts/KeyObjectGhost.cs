@@ -13,14 +13,8 @@ public class KeyObjectGhost : MonoBehaviour
 
     public void Disappear()
     {
-        //_animator.SetTrigger(_disappearAnimationTrigger);
         StartCoroutine(WaitForEndOfDisappear());
     }
-
-    //public void Destroy()
-    //{
-    //    Destroy(_animator.gameObject);
-    //}
 
     private IEnumerator WaitForEndOfDisappear()
     {
