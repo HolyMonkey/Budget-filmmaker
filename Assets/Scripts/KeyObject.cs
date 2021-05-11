@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KeyObject : MonoBehaviour
 {
+    [SerializeField] private KeyObjectGhost _objectGhost;
+    //[SerializeField] private float _ghostDisappearDelay;
     [SerializeField] private KeyObjectMover _mover;
 
     private void OnEnable()
@@ -18,6 +20,19 @@ public class KeyObject : MonoBehaviour
 
     private void OnTargetReached()
     {
-        Debug.Log("Target is reached");
+        StartCoroutine(SuccessMovementRoutine());
+    }
+
+    private IEnumerator SuccessMovementRoutine()
+    {
+        while (transform.position != _objectGhost.transform.position)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _objectGhost.transform.position, Time.deltaTime);
+            yield return null;
+        }
+
+        _objectGhost.Disappear();
+        //yield return new WaitForSeconds(_ghostDisappearDelay);
+        //_objectGhost.Destroy();
     }
 }

@@ -5,17 +5,18 @@ using UnityEngine.Events;
 
 public abstract class KeyObjectMover : MonoBehaviour
 {
-    [SerializeField] protected Transform TargetPoint;
+    [SerializeField] private KeyObjectGhost _objectGhost;
     [SerializeField] private float _minDistanceToTarget;
 
+    private bool _isTargetReached;
+    
     protected bool IsDragging;
-    protected bool IsTargetReached;
 
     public event UnityAction TargetReached;
 
     private void Update()
     {
-        if (IsTargetReached == false)
+        if (_isTargetReached == false)
         {
             TryMove();
         }
@@ -25,9 +26,9 @@ public abstract class KeyObjectMover : MonoBehaviour
 
     protected void IsCloseToTarget()
     {
-        if (Mathf.Abs((TargetPoint.position).magnitude - (transform.position).magnitude) <= _minDistanceToTarget)
+        if (Mathf.Abs(_objectGhost.transform.position.magnitude - transform.position.magnitude) <= _minDistanceToTarget)
         {
-            IsTargetReached = true;
+            _isTargetReached = true;
             TargetReached?.Invoke();
         }
     }
