@@ -9,6 +9,7 @@ public class CameraRotator : MonoBehaviour
     [SerializeField] private Transform _cameraRig;
     [SerializeField] private KeyObjectMover[] _movers;
     [SerializeField] private float _resetTime;
+    [SerializeField] private ActionsDemonstrator _actionDemonstrator;
 
     private Vector3 _mousePreviousPosition;
     private bool _isRotationAllowed = true;
@@ -23,6 +24,8 @@ public class CameraRotator : MonoBehaviour
             mover.DraggingStarted += OnDraggingStarted;
             mover.DraggingEnded += OnDraggingEnded;
         }
+
+        _actionDemonstrator.ActionStarted += OnActionStarted;
     }
 
     private void OnDisable()
@@ -32,6 +35,8 @@ public class CameraRotator : MonoBehaviour
             mover.DraggingStarted -= OnDraggingStarted;
             mover.DraggingEnded -= OnDraggingEnded;
         }
+
+        _actionDemonstrator.ActionStarted -= OnActionStarted;
     }
 
     private void Start()
@@ -77,14 +82,22 @@ public class CameraRotator : MonoBehaviour
         Quaternion currentRotation = _cameraRig.rotation;
         float passedTime = 0;
 
-        while (_cameraRig.rotation != _startRotation)
+        if (_cameraRig.rotation != _startRotation)
         {
-            _cameraRig.rotation = Quaternion.Lerp(currentRotation, _startRotation, passedTime / _resetTime);
-            passedTime += Time.deltaTime;
-            yield return null;
+            while (passedTime < _resetTime)
+            {
+                _cameraRig.rotation = Quaternion.Lerp(currentRotation, _startRotation, passedTime / _resetTime);
+                passedTime += Time.deltaTime;
+                yield return null;
+            }
         }
 
         _cameraRig.rotation = _startRotation;
         CameraReset?.Invoke();
+    }
+
+    private void OnActionStarted()
+    {
+        _isRotationAllowed = false;
     }
 }

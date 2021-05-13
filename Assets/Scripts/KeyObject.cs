@@ -7,6 +7,11 @@ public class KeyObject : MonoBehaviour
     [SerializeField] private KeyObjectGhost _objectGhost;
     [SerializeField] private KeyObjectMover _mover;
 
+    private bool _isInCorrectPlace;
+
+    public bool IsInCorrectPlace => _isInCorrectPlace;
+    public KeyObjectGhost ObjectGhost => _objectGhost;
+
     private void OnEnable()
     {
         _mover.TargetReached += OnTargetReached;
@@ -30,6 +35,7 @@ public class KeyObject : MonoBehaviour
             yield return null;
         }
 
+        _isInCorrectPlace = true;
         _objectGhost.Disappear();
     }
 }
