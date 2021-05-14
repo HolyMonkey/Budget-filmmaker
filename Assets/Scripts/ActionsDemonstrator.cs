@@ -102,7 +102,7 @@ public class ActionsDemonstrator : MonoBehaviour
             _soldierScene.Run();
             yield return new WaitForSeconds(_delayBetweenActions);
             _airplaneScene.Run();
-            yield return new WaitForSeconds(_delayBetweenActions);
+            yield return new WaitForSeconds(_delayBetweenActions * 2);
             _squadScene.Run();
         }
     }

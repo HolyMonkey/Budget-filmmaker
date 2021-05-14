@@ -17,6 +17,7 @@ public class AirplaneScene : ActionScene
     [SerializeField] private BombPlace[] _bombPlaces;
     [SerializeField] private float _lastBombImpactDelay;
     [SerializeField] private FilmCrewUnderPlane _filmCrewUnderPlane;
+    [SerializeField] private ParticleSystem _filmCrewDeathEffectTemplate;
 
     private bool _shouldAirplaneFly;
     private int _bombsCount;
@@ -55,6 +56,7 @@ public class AirplaneScene : ActionScene
             {
                 Destroy(_airplane.gameObject);
                 _airplane = null;
+                CompleteScene();
             }
         }
     }
@@ -65,16 +67,20 @@ public class AirplaneScene : ActionScene
         _bombsCount++;
         if (_bombsCount == _bombPlaces.Length)
         {
-            StartCoroutine(WaitForEndOfScene());
+            if (_airplane.IsInCorrectPlace == false)
+            {
+                StartCoroutine(LastBombImpactRoutine());
+            }
         }
     }
 
-    private IEnumerator WaitForEndOfScene()
+    private IEnumerator LastBombImpactRoutine()
     {
         yield return new WaitForSeconds(_lastBombImpactDelay);
         _filmCrewUnderPlane.gameObject.SetActive(false);
-        // skull effect
-        CompleteScene();
+        ParticleSystem deathEffect = Instantiate(_filmCrewDeathEffectTemplate, _filmCrewDeathEffectTemplate.transform.position, _filmCrewDeathEffectTemplate.transform.rotation);
+        yield return new WaitForSeconds(_filmCrewDeathEffectTemplate.main.duration);
+        Destroy(deathEffect.gameObject);
     }
 
     //private IEnumerator SceneRoutine()
