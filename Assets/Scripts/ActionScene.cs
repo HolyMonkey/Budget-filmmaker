@@ -5,13 +5,13 @@ using UnityEngine.Events;
 
 public abstract class ActionScene : MonoBehaviour
 {
-    public event UnityAction ActionSceneCompleted;
+    public event UnityAction<ActionScene> ActionSceneCompleted;
 
     public abstract void Run();
 
     protected void CompleteScene()
     {
         Debug.Log("Scene completed");
-        ActionSceneCompleted?.Invoke();
+        ActionSceneCompleted?.Invoke(this);
     }
 }

@@ -46,7 +46,7 @@ public abstract class KeyObjectMover : MonoBehaviour
 
     protected void IsCloseToTarget()
     {
-        if (Mathf.Abs(_objectGhost.transform.position.magnitude - transform.position.magnitude) <= _minDistanceToTarget)
+        if (Vector3.Distance(_objectGhost.transform.position, transform.position) <= _minDistanceToTarget)
         {
             _isTargetReached = true;
             TargetReached?.Invoke();

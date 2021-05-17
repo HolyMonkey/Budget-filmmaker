@@ -16,21 +16,31 @@ public class ActionsDemonstrator : MonoBehaviour
     [SerializeField] private AirplaneScene _airplaneScene;
     [SerializeField] private SquadScene _squadScene;
     [SerializeField] private float _delayBetweenActions;
+    [SerializeField] private float _delayAfterActions;
 
     private bool _isCameraReset;
+    private bool _isAllObjectsAtCorrectPlaces = true;
+    private Queue<ActionScene> _runningActionsQueue = new Queue<ActionScene>();
 
     public event UnityAction ActionStarted;
+    public event UnityAction<bool> AllActionsCompleted;
 
     private void OnEnable()
     {
         _andActionButton.onClick.AddListener(StartPreparation);
         _cameraRotator.CameraReset += OnCameraReset;
+        _soldierScene.ActionSceneCompleted += OnActionSceneCompleted;
+        _airplaneScene.ActionSceneCompleted += OnActionSceneCompleted;
+        _squadScene.ActionSceneCompleted += OnActionSceneCompleted;
     }
 
     private void OnDisable()
     {
         _andActionButton.onClick.RemoveListener(StartPreparation);
         _cameraRotator.CameraReset -= OnCameraReset;
+        _soldierScene.ActionSceneCompleted -= OnActionSceneCompleted;
+        _airplaneScene.ActionSceneCompleted -= OnActionSceneCompleted;
+        _squadScene.ActionSceneCompleted -= OnActionSceneCompleted;
     }
 
     private void StartPreparation()
@@ -48,18 +58,17 @@ public class ActionsDemonstrator : MonoBehaviour
         ActionStarted?.Invoke();
         _cameraRotator.ResetRotation();
         _andActionButtonAnimator.SetTrigger(_buttonDisappearAnimationTrigger);
-        bool isAllObjectsAtCorrectPlaces = true;
 
         foreach (KeyObject keyObject in _keyObjects)
         {
             if (keyObject.IsInCorrectPlace == false)
             {
-                isAllObjectsAtCorrectPlaces = false;
+                _isAllObjectsAtCorrectPlaces = false;
                 keyObject.ObjectGhost.FullyDisappear();
             }
         }
 
-        if (isAllObjectsAtCorrectPlaces == false)
+        if (_isAllObjectsAtCorrectPlaces == false)
         {
             yield return new WaitForSeconds(_ghostsDisappearDelay);
         }
@@ -79,31 +88,54 @@ public class ActionsDemonstrator : MonoBehaviour
 
     private IEnumerator StartActionsRoutine()
     {
-        bool allObjectsAtCorrectPlaces = true;
-
-        foreach (KeyObject keyObject in _keyObjects)
+        if (_isAllObjectsAtCorrectPlaces == false)
         {
-            if (keyObject.IsInCorrectPlace == false)
+            foreach (KeyObject keyObject in _keyObjects)
             {
-                allObjectsAtCorrectPlaces = false;
-                if (keyObject is Soldier)
+                if (keyObject.IsInCorrectPlace == false)
                 {
-                    _soldierScene.Run();
-                }
-                else if (keyObject is Airplane)
-                {
-                    _airplaneScene.Run();
+                    if (keyObject is Soldier)
+                    {
+                        _soldierScene.Run();
+                        _runningActionsQueue.Enqueue(_soldierScene);
+                    }
+                    else if (keyObject is Airplane)
+                    {
+                        _airplaneScene.Run();
+                        _runningActionsQueue.Enqueue(_airplaneScene);
+                    }
                 }
             }
         }
-
-        if (allObjectsAtCorrectPlaces)
+        else
         {
             _soldierScene.Run();
+            _runningActionsQueue.Enqueue(_soldierScene);
             yield return new WaitForSeconds(_delayBetweenActions);
             _airplaneScene.Run();
+            _runningActionsQueue.Enqueue(_airplaneScene);
             yield return new WaitForSeconds(_delayBetweenActions * 2);
             _squadScene.Run();
+            _runningActionsQueue.Enqueue(_squadScene);
         }
+    }
+
+    private void OnActionSceneCompleted(ActionScene action)
+    {
+        if (_runningActionsQueue.Count > 0)
+        {
+            _runningActionsQueue.Dequeue();
+        }
+        
+        if (_runningActionsQueue.Count == 0)
+        {
+            StartCoroutine(WaitForResults());
+        }
+    }
+
+    private IEnumerator WaitForResults()
+    {
+        yield return new WaitForSeconds(_delayAfterActions);
+        AllActionsCompleted?.Invoke(_isAllObjectsAtCorrectPlaces);
     }
 }

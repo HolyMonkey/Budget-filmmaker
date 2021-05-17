@@ -6,6 +6,7 @@ public class KeyObject : MonoBehaviour
 {
     [SerializeField] private KeyObjectGhost _objectGhost;
     [SerializeField] private KeyObjectMover _mover;
+    [SerializeField] private float _positionAdjustmentSpeed;
 
     private bool _isInCorrectPlace;
 
@@ -31,7 +32,7 @@ public class KeyObject : MonoBehaviour
     {
         while (transform.position != _objectGhost.transform.position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _objectGhost.transform.position, Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _objectGhost.transform.position, _positionAdjustmentSpeed * Time.deltaTime);
             yield return null;
         }
 

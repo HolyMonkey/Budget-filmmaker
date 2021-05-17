@@ -1079,6 +1079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animatorSpeedParameter: Speed
   _destinationPoint: {fileID: 0}
+  _minDistanceFromDestination: 0.5
 --- !u!1 &8463842749195419695
 GameObject:
   m_ObjectHideFlags: 0
