@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 462254}
   - component: {fileID: 19882686}
   - component: {fileID: 19953594}
-  m_Layer: 0
-  m_Name: CorrectMovement_8
+  m_Layer: 5
+  m_Name: MiniBarFilledEffect_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134348}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 110, y: 110, z: 110}
   m_Children:
   - {fileID: 490308}
   m_Father: {fileID: 0}
@@ -4850,7 +4850,7 @@ GameObject:
   - component: {fileID: 490308}
   - component: {fileID: 19896308}
   - component: {fileID: 19927624}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

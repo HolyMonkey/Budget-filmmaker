@@ -9,6 +9,7 @@ public class ActionsDemonstrator : MonoBehaviour
     [SerializeField] private Button _andActionButton;
     [SerializeField] private Animator _andActionButtonAnimator;
     [SerializeField] private string _buttonDisappearAnimationTrigger;
+    [SerializeField] private ProgressBar _progressBar;
     [SerializeField] private CameraRotator _cameraRotator;
     [SerializeField] private KeyObject[] _keyObjects;
     [SerializeField] private float _ghostsDisappearDelay;
@@ -58,6 +59,7 @@ public class ActionsDemonstrator : MonoBehaviour
         ActionStarted?.Invoke();
         _cameraRotator.ResetRotation();
         _andActionButtonAnimator.SetTrigger(_buttonDisappearAnimationTrigger);
+        _progressBar.Disappear();
 
         foreach (KeyObject keyObject in _keyObjects)
         {

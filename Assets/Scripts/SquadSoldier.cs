@@ -33,7 +33,6 @@ public class SquadSoldier : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, _destinationPoint.position) <= _minDistanceFromDestination)
             {
-                Debug.Log("Destination reached");
                 _isReachedDestination = true;
                 DestinationReached?.Invoke();
             }
