@@ -8,18 +8,18 @@ public class SoldierMover : KeyObjectMover
 
     protected override void TryMove()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo))
-            {
-                if (hitInfo.transform.TryGetComponent(out Soldier soldier))
-                {
-                    IsDragging = true;
-                    StartDragging();
-                }
-            }
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        //    {
+        //        if (hitInfo.transform.TryGetComponent(out Soldier soldier))
+        //        {
+        //            IsDragging = true;
+        //            StartDragging();
+        //        }
+        //    }
+        //}
 
         if (Input.GetMouseButtonUp(0) && IsDragging)
         {
@@ -33,7 +33,21 @@ public class SoldierMover : KeyObjectMover
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (_islandCollider.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity))
             {
-                transform.position = hitInfo.point;
+                //transform.position = hitInfo.point;
+                transform.position = Vector3.MoveTowards(transform.position, hitInfo.point, DraggingSpeed * Time.deltaTime);
+            }
+        }
+    }
+
+    protected override void OnPointerDown(Vector2 mousePosition)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            if (hitInfo.transform.TryGetComponent(out Soldier soldier))
+            {
+                IsDragging = true;
+                StartDragging();
             }
         }
     }

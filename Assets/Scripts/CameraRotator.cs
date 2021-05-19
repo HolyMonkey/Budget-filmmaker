@@ -10,10 +10,12 @@ public class CameraRotator : MonoBehaviour
     [SerializeField] private KeyObjectMover[] _movers;
     [SerializeField] private float _resetTime;
     [SerializeField] private ActionsDemonstrator _actionDemonstrator;
+    //[SerializeField] private Transform _handPointerRig;
 
     private Vector3 _mousePreviousPosition;
     private bool _isRotationAllowed = true;
     private Quaternion _startRotation;
+    //private Quaternion _handPointerStartRotation;
 
     public event UnityAction CameraReset;
 
@@ -42,6 +44,7 @@ public class CameraRotator : MonoBehaviour
     private void Start()
     {
         _startRotation = _cameraRig.rotation;
+        //_handPointerStartRotation = _handPointerRig.rotation;
     }
 
     private void Update()
@@ -57,6 +60,7 @@ public class CameraRotator : MonoBehaviour
             {
                 Vector3 passedDistance = Camera.main.ScreenToViewportPoint(Input.mousePosition) - _mousePreviousPosition;
                 _cameraRig.Rotate(new Vector3(0, 1, 0), -passedDistance.x * 180 * Time.deltaTime * _sensitivity);
+                //_handPointerRig.Rotate(new Vector3(0, 1, 0), -passedDistance.x * 180 * Time.deltaTime * _sensitivity);
                 _mousePreviousPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             }
         }
@@ -80,6 +84,7 @@ public class CameraRotator : MonoBehaviour
     private IEnumerator WaitForEndOfReset()
     {
         Quaternion currentRotation = _cameraRig.rotation;
+        //Quaternion currentHandPointerRotation = _handPointerRig.rotation;
         float passedTime = 0;
 
         if (_cameraRig.rotation != _startRotation)
@@ -87,12 +92,15 @@ public class CameraRotator : MonoBehaviour
             while (passedTime < _resetTime)
             {
                 _cameraRig.rotation = Quaternion.Lerp(currentRotation, _startRotation, passedTime / _resetTime);
+                //_handPointerRig.rotation = Quaternion.Lerp(currentHandPointerRotation, _handPointerStartRotation, passedTime / _resetTime);
+
                 passedTime += Time.deltaTime;
                 yield return null;
             }
         }
 
         _cameraRig.rotation = _startRotation;
+        //_handPointerRig.rotation = _handPointerStartRotation;
         CameraReset?.Invoke();
     }
 
