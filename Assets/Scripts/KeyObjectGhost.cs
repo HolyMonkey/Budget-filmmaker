@@ -9,7 +9,6 @@ public class KeyObjectGhost : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private string _disappearAnimationTrigger;
     [SerializeField] private float _animationDelay;
-    [SerializeField] private ParticleSystem _starEffect;
     [SerializeField] private ParticleSystem _successEffectTemplate;
     [SerializeField] private float _successDelay;
 
@@ -33,7 +32,6 @@ public class KeyObjectGhost : MonoBehaviour
         ParticleSystem successEffect = Instantiate(_successEffectTemplate, transform);
         yield return new WaitForSeconds(_successDelay);
         Destroy(_ghostAnimator.gameObject);
-        Destroy(_starEffect.gameObject);
         yield return new WaitForSeconds(_successEffectTemplate.main.duration);
         Destroy(gameObject);
     }

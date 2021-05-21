@@ -558,8 +558,8 @@ GameObject:
   - component: {fileID: 6472850642744744268}
   - component: {fileID: 3023965954152910511}
   - component: {fileID: 8556322556419303373}
-  - component: {fileID: 5172990102874495859}
   - component: {fileID: 5939859845675573911}
+  - component: {fileID: 5172990102874495859}
   m_Layer: 5
   m_Name: WinScreen
   m_TagString: Untagged
@@ -650,6 +650,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &5939859845675573911
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2284976356642352690}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &5172990102874495859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,18 +675,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearAnimationTrigger: Appear
---- !u!225 &5939859845675573911
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2284976356642352690}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
+  _continueButton: {fileID: 1404516144554372891}
+  _nextLevelSceneName: LevelTwo
 --- !u!1 &2379345015773384328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,8 +1035,8 @@ GameObject:
   - component: {fileID: 6620357926632908663}
   - component: {fileID: 7068520770218034219}
   - component: {fileID: 8477327610699386099}
-  - component: {fileID: 5951041846515255263}
   - component: {fileID: 7784640108212004638}
+  - component: {fileID: 5951041846515255263}
   m_Layer: 5
   m_Name: FailScreen
   m_TagString: Untagged
@@ -1127,6 +1129,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &7784640108212004638
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3709069918358857894}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &5951041846515255263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1141,19 +1155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _appearAnimationTrigger: Appear
   _restartButton: {fileID: 2568683494843187087}
-  _levelSceneName: SampleScene
---- !u!225 &7784640108212004638
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3709069918358857894}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
+  _levelSceneName: LevelOne
 --- !u!1 &4261931109794612200
 GameObject:
   m_ObjectHideFlags: 0

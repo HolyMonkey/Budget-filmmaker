@@ -7,7 +7,7 @@ public abstract class KeyObjectMover : MonoBehaviour
 {
     [SerializeField] private KeyObjectGhost _objectGhost;
     [SerializeField] private float _minDistanceToTarget;
-    [SerializeField] private ActionsDemonstrator _actionDemonstrator;
+    [SerializeField] private ActionsDemonstrator _actionsDemonstrator;
     [SerializeField] private HandPointer _handPointer;
     [SerializeField] protected float DraggingSpeed;
 
@@ -23,13 +23,13 @@ public abstract class KeyObjectMover : MonoBehaviour
 
     private void OnEnable()
     {
-        _actionDemonstrator.ActionStarted += OnAcitonStarted;
+        _actionsDemonstrator.ActionStarted += OnAcitonStarted;
         _handPointer.MouseDown += OnPointerDown;
     }
 
     private void OnDisable()
     {
-        _actionDemonstrator.ActionStarted -= OnAcitonStarted;
+        _actionsDemonstrator.ActionStarted -= OnAcitonStarted;
         _handPointer.MouseDown -= OnPointerDown;
     }
 

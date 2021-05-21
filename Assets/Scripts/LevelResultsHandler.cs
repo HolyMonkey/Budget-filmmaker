@@ -21,7 +21,7 @@ public class LevelResultsHandler : MonoBehaviour
     private void OnAllActionsCompleted(bool isLevelCompleted)
     {
         if (isLevelCompleted)
-        { 
+        {
             _winScreen.Show();
         }
         else
