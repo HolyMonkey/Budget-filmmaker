@@ -8,10 +8,11 @@ public class KeyObject : MonoBehaviour
     [SerializeField] private KeyObjectMover _mover;
     [SerializeField] private float _positionAdjustmentSpeed;
 
-    private bool _isInCorrectPlace;
+    protected bool IsInCorrectPlace;
 
-    public bool IsInCorrectPlace => _isInCorrectPlace;
+    public bool IsObjectInCorrectPlace => IsInCorrectPlace;
     public KeyObjectGhost ObjectGhost => _objectGhost;
+    public float PositionAdjustmentSpeed => _positionAdjustmentSpeed;
 
     private void OnEnable()
     {
@@ -28,7 +29,7 @@ public class KeyObject : MonoBehaviour
         StartCoroutine(SuccessMovementRoutine());
     }
 
-    private IEnumerator SuccessMovementRoutine()
+    protected virtual IEnumerator SuccessMovementRoutine()
     {
         while (transform.position != _objectGhost.transform.position)
         {
@@ -36,7 +37,7 @@ public class KeyObject : MonoBehaviour
             yield return null;
         }
 
-        _isInCorrectPlace = true;
+        IsInCorrectPlace = true;
         _objectGhost.Disappear();
     }
 }

@@ -5,16 +5,16 @@ using UnityEngine.Events;
 
 public abstract class KeyObjectMover : MonoBehaviour
 {
-    [SerializeField] private KeyObjectGhost _objectGhost;
-    [SerializeField] private float _minDistanceToTarget;
     [SerializeField] private ActionsDemonstrator _actionsDemonstrator;
     [SerializeField] private HandPointer _handPointer;
+    [SerializeField] protected KeyObjectGhost ObjectGhost;
+    [SerializeField] protected float MinDistanceToTarget;
     [SerializeField] protected float DraggingSpeed;
 
-    private bool _isTargetReached;
     private bool _isActionStarted;
-    private Vector3 _startPosition;
-    
+
+    protected Vector3 StartPosition;
+    protected bool IsTargetReached;
     protected bool IsDragging;
 
     public event UnityAction TargetReached;
@@ -35,12 +35,12 @@ public abstract class KeyObjectMover : MonoBehaviour
 
     private void Start()
     {
-        _startPosition = transform.position;
+        StartPosition = transform.position;
     }
 
     private void Update()
     {
-        if (_isTargetReached == false && _isActionStarted == false)
+        if (IsTargetReached == false && _isActionStarted == false)
         {
             TryMove();
         }
@@ -49,17 +49,22 @@ public abstract class KeyObjectMover : MonoBehaviour
     protected abstract void TryMove();
     protected abstract void OnPointerDown(Vector2 mousePosition);
 
-    protected void IsCloseToTarget()
+    protected virtual void IsCloseToTarget()
     {
-        if (Vector3.Distance(_objectGhost.transform.position, transform.position) <= _minDistanceToTarget)
+        if (Vector3.Distance(ObjectGhost.transform.position, transform.position) <= MinDistanceToTarget)
         {
-            _isTargetReached = true;
+            IsTargetReached = true;
             TargetReached?.Invoke();
         }
         else
         {
-            transform.position = _startPosition;
+            transform.position = StartPosition;
         }
+    }
+
+    protected void ReachTarget()
+    {
+        TargetReached?.Invoke();
     }
 
     protected void StartDragging()

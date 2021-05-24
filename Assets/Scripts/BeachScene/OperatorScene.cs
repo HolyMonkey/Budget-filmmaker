@@ -20,7 +20,7 @@ public class OperatorScene : ActionScene
     public override void Run()
     {
         Debug.Log("Start soldier scene");
-        if (_operator.IsInCorrectPlace == false)
+        if (_operator.IsObjectInCorrectPlace == false)
         {
             StartCoroutine(FailRoutine());
         }

@@ -50,7 +50,7 @@ public class AirplaneScene : ActionScene
         _bombsCount++;
         if (_bombsCount == _bombPlaces.Length)
         {
-            if (_airplane.IsInCorrectPlace == false)
+            if (_airplane.IsObjectInCorrectPlace == false)
             {
                 StartCoroutine(LastBombImpactRoutine());
             }

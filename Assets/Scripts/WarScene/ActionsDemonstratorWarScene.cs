@@ -60,7 +60,7 @@ public class ActionsDemonstratorWarScene : ActionsDemonstrator
 
         foreach (KeyObject keyObject in _keyObjects)
         {
-            if (keyObject.IsInCorrectPlace == false)
+            if (keyObject.IsObjectInCorrectPlace == false)
             {
                 _isAllObjectsAtCorrectPlaces = false;
                 keyObject.ObjectGhost.FullyDisappear();
@@ -91,7 +91,7 @@ public class ActionsDemonstratorWarScene : ActionsDemonstrator
         {
             foreach (KeyObject keyObject in _keyObjects)
             {
-                if (keyObject.IsInCorrectPlace == false)
+                if (keyObject.IsObjectInCorrectPlace == false)
                 {
                     if (keyObject is Soldier)
                     {

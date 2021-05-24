@@ -37,7 +37,7 @@ public class SoldierScene : ActionScene
 
     private IEnumerator ExplosionImpactRoutine()
     {
-        if (_soldier.IsInCorrectPlace == false)
+        if (_soldier.IsObjectInCorrectPlace == false)
         {
             _soldierAnimator.SetTrigger(_soldierDieAnimationTrigger);
             yield return new WaitForSeconds(_explosionImpactDelay);

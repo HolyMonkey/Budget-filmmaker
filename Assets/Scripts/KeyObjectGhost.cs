@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class KeyObjectGhost : MonoBehaviour
 {
-    [SerializeField] private Animator _ghostAnimator;
     [SerializeField] private string _ghostDisappearAnimationTrigger;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private string _disappearAnimationTrigger;
-    [SerializeField] private float _animationDelay;
     [SerializeField] private ParticleSystem _successEffectTemplate;
-    [SerializeField] private float _successDelay;
+    [SerializeField] protected Animator GhostAnimator;
+    [SerializeField] protected Animator Animator;
+    [SerializeField] protected string DisappearAnimationTrigger;
+    [SerializeField] protected float AnimationDelay;
+    [SerializeField] protected float SuccessDelay;
 
     public void Disappear()
     {
@@ -22,24 +22,19 @@ public class KeyObjectGhost : MonoBehaviour
         StartCoroutine(WaitForEndOfFullyDisappear());
     }
 
-    private IEnumerator WaitForEndOfDisappear()
+    protected virtual IEnumerator WaitForEndOfDisappear()
     {
-        //_ghostAnimator.SetTrigger(_ghostDisappearAnimationTrigger);
-        //yield return new WaitForSeconds(_animationDelay);
-        //Destroy(_ghostAnimator.gameObject);
-
-        //ParticleSystem successEffect = Instantiate(_successEffectTemplate, _starEffect.transform.position, _successEffectTemplate.transform.rotation);
         ParticleSystem successEffect = Instantiate(_successEffectTemplate, transform);
-        yield return new WaitForSeconds(_successDelay);
-        Destroy(_ghostAnimator.gameObject);
+        yield return new WaitForSeconds(SuccessDelay);
+        Destroy(GhostAnimator.gameObject);
         yield return new WaitForSeconds(_successEffectTemplate.main.duration);
         Destroy(gameObject);
     }
 
-    private IEnumerator WaitForEndOfFullyDisappear()
+    protected virtual IEnumerator WaitForEndOfFullyDisappear()
     {
-        _animator.SetTrigger(_disappearAnimationTrigger);
-        yield return new WaitForSeconds(_animationDelay);
+        Animator.SetTrigger(DisappearAnimationTrigger);
+        yield return new WaitForSeconds(AnimationDelay);
         Destroy(gameObject);
     }
 }
